@@ -1,0 +1,39 @@
+#root {
+    margin: 0 auto;
+    text-align: center;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f5dc 0%, #d3d3d3 100%);
+}
+
+.main-card {
+    /* padding: 2em; */
+    width: 90vw;
+    height: 95vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+
+.card-body-left {
+    background-image: url("./assets/bg-img1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-body-right {
+    background: linear-gradient(135deg, #0d0d14 0%, #10121c 100%);
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: #f97316;
+    text-transform: uppercase;
+    border-bottom: 0.8px solid #f97316;
+    margin-bottom: 2px;
+}
