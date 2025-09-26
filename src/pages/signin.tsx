@@ -1,7 +1,16 @@
-// import viteLogo from "/vite.svg";
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
+import * as authService from "../services/authSerivce"
 const SignInPage = () => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+  
+    const handleSubmit = (e: React.FormEvent) =>{
+        e.preventDefault();
+        authService.login({email, password})
+    }
+
     return(
         <>
             <div className="card main-card rounded-4 d-flex flex-row">
@@ -16,17 +25,21 @@ const SignInPage = () => {
                                 {/* <h4 className="fw-bold">Welcome Back</h4> */}
                                 <p>Sign in to continue...</p>
                             </div>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                             <div className="mb-3 text-start">
                             <label htmlFor="email" className="form-label">Email</label>
-                            <input type="email" id="email" className="form-control bg-dark text-light border-0" placeholder="Enter your email" />
+                            <input onChange={(e)=> setEmail(e.target.value)}
+                                type="email" id="email" className="form-control bg-dark text-light border-0" placeholder="Enter your email" 
+                            />
                             </div>
                             <div className="mb-3 text-start">
                             <div className="d-flex justify-content-between">
                             <label htmlFor="password" className="form-label">Password</label>
                             <a href="#" className="text-decoration-none" style={{ color: "#f97316", fontSize: "0.875rem" }}>Forgot password?</a>
                             </div>
-                            <input type="password" id="password" className="form-control bg-dark text-light border-0" placeholder="Enter your password" />
+                            <input onChange={(e)=> setPassword(e.target.value)}
+                                type="password" id="password" className="form-control bg-dark text-light border-0" placeholder="Enter your password" 
+                            />
                             </div>
                             <div className="form-check mb-3 text-start">
                             <input type="checkbox" id="remember" className="form-check-input" />
@@ -52,5 +65,7 @@ const SignInPage = () => {
         </>
     );
 }
+
+
 
 export default SignInPage;
