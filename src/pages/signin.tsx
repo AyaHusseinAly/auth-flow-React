@@ -13,8 +13,8 @@ const SignInPage = () => {
 
     return(
         <>
-            <div className="card main-card rounded-4 d-flex flex-row">
-                <div className="card-body card-body-left w-50 rounded-start-4">
+            <div className="card border-0 main-card rounded-4 d-flex flex-row">
+                <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block">
                 </div>
                 <div className="card-body card-body-right w-50 rounded-end-4">
 
@@ -41,17 +41,14 @@ const SignInPage = () => {
                                 type="password" id="password" className="form-control bg-dark text-light border-0" placeholder="Enter your password" 
                             />
                             </div>
-                            <div className="form-check mb-3 text-start">
-                            <input type="checkbox" id="remember" className="form-check-input" />
-                            <label htmlFor="remember" className="form-check-label">Remember me</label>
-                            </div>
+
                             <button type="submit" className="btn w-100" style={{ backgroundColor: "#f97316", color: "white", borderRadius: "8px" }}>Sign In</button>
                             </form>
                             <div className="text-center my-3">Or continue with</div>
                             <div className="d-flex gap-2 mb-3">
-                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2"><i className="bi bi-google"></i> Google</button>
-                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2"><i className="bi bi-facebook"></i> Facebook</button>
-                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2"><i className="bi bi-apple"></i> Apple</button>
+                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2" disabled><i className="bi bi-google"></i> Google</button>
+                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2" disabled><i className="bi bi-facebook"></i> Facebook</button>
+                            <button className="btn flex-fill btn-dark border-0 d-flex align-items-center justify-content-center gap-2" disabled><i className="bi bi-apple"></i> Apple</button>
                         </div>
                         <div className="text-center">
                             <span>Don’t have an account? </span>

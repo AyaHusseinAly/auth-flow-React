@@ -3,9 +3,9 @@ import {Link} from 'react-router-dom';
 const HomePage = () => {
     return (
         <>
-          <div className="card main-card rounded-4 d-flex flex-row">
+          <div className="card border-0 main-card rounded-4 d-flex flex-row">
             {/* Left side image/illustration area */}
-            <div className="card-body card-body-left w-50 rounded-start-4"></div>
+            <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block"></div>
       
             {/* Right side welcome section */}
             <div className="card-body card-body-right w-50 rounded-end-4">
