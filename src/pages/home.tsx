@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import * as apiService from "../services/apiService";
 import { useAuth } from '../store/token-context';
+import { protectedRequest } from '../services/apiWrapper';
+
 const HomePage = () => {
   const { setAccessTokenAndHeaders } = useAuth();
   const [userEmail, setUserEmail] = useState("");
@@ -42,7 +44,7 @@ const HomePage = () => {
             <div className="d-flex align-items-center justify-content-center">
             <button
                   style={{ backgroundColor: "#f97316", color: "white", borderRadius: "8px" }}
-                  onClick={getUserEmail}
+                  onClick={()=>protectedRequest(getUserEmail)}
               >show user email</button>
 
             </div>

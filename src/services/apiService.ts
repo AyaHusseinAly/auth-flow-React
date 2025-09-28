@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BE_URL } from "../config/constants";
-import axiosInstance from "./api.interceptor";
 
 const deviceId = localStorage.getItem("deviceId");
 
@@ -25,7 +24,7 @@ export const signIn = async (data: {email: string, password: string, deviceId?: 
 
 export const signOut = async () => {
     try{
-        const res = await axiosInstance.post(`${BE_URL}/auth/signout`,{deviceId});
+        const res = await axios.post(`${BE_URL}/auth/signout`,{deviceId});
         return res.data;
     } catch (err: any) {
         console.error("signOut error:", err.response?.data || err.message);
@@ -73,8 +72,7 @@ export const refreshToken = async () => {
 
 export const getUser = async () => {
     try{
-        console.log("headers<<>>",axiosInstance.defaults.headers)
-        const res = await axiosInstance.get(`${BE_URL}/users/profile`);
+        const res = await axios.get(`${BE_URL}/users/profile`);
         return res.data;
     } catch (err: any) {
         console.error("getUser error:", err.response?.data || err.message);

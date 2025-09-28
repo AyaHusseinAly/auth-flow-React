@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import * as authService from '../services/authSerivce';
-import axiosInstance from '../services/api.interceptor';
 
 interface AuthContextType {
   accessToken: string | null;
@@ -16,7 +16,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const setAccessTokenAndHeaders = (value: string|null)=>{
     setAccessToken(value);
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${value}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${value}`;
   }
   // Refresh token on initial load
   useEffect(() => {
