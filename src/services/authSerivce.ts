@@ -30,3 +30,15 @@ export const refreshAccessToken = async () => {
     const responseData = await apiService.refreshToken();
     return responseData;
 }
+
+export async function checkEmailUnique(email: string) {
+    try {
+      const res = await apiService.getUserByEmail(email);
+      return res.data; // user exists
+    } catch (err: any) {
+      if (err.response?.status === 404) {
+        return null; // email is unique
+      }
+      throw err;
+    }
+  }

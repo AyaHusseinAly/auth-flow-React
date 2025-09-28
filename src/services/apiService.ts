@@ -78,5 +78,14 @@ export const getUser = async () => {
         console.error("getUser error:", err.response?.data || err.message);
         throw err;
     }
-    
+}
+
+export const getUserByEmail = async (email:string) => {
+    try{
+        const res = await axios.get(`${BE_URL}/users?email=${email}`);
+        return res;
+    } catch (err: any) {
+        console.error("getUser error:", err.response?.data || err.message);
+        throw err;
+    }
 }

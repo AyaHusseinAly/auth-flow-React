@@ -8,6 +8,8 @@ interface FormInputProps {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMsg?: string
   required?: boolean;
   minLength?: number
 }
@@ -19,15 +21,23 @@ export const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   value,
   onChange,
+  onBlur=()=>{},
+  errorMsg="",
   required = false,
   minLength = 0
 
 }) => {
   return (
     <div className="mb-3 text-start">
-      <label htmlFor={id} className="form-label">{label}</label>
+      <div className="d-flex justify-content-between">
+        <label htmlFor={id} className="form-label">{label}</label>
+        <p className="text-decoration-none"
+          style={{ color: "red", fontSize: "0.875rem" }}
+        >{errorMsg}</p>
+      </div>
       <input
         onChange={onChange}
+        onBlur={onBlur}
         type={type}
         id={id}
         className="form-control bg-dark text-light border-0"
