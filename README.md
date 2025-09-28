@@ -1,73 +1,107 @@
-# React + TypeScript + Vite
+# 🔐 Auth Flow React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A JWT-based authentication app with refresh tokens, device tracking, and automatic token refresh. built with React, TypeScript, and Vite
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 **Secure Authentication**: JWT access tokens with refresh token rotation
+- 🛡️ **Route Protection**: Protected and public route guards
+- 🔄 **Auto Token Refresh**: Automatic token refresh on expiration
+- 🔒 **HttpOnly Cookies**: Secure refresh token storage
+- 📱 **Device Tracking**: Unique device ID for enhanced security
+- ⚡ **Fast Development**: Vite-powered with hot module replacement
 
-## React Compiler
+## 🚀 Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- React 19.1.1 + TypeScript
+- Node.js (v18 or higher)
+- npm or yarn
+- Backend API running (check `auth-flow-nest`)
+- **Build Tool**: Vite 7.1.7
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd auth-flow-React
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. **Environment Setup**
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_BE_BASE_URL=http://localhost:3000
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   Navigate to `http://localhost:5173`
+
+## 📁 Project Structure
+
+```
+src/
+├── components/           # Reusable UI components
+│   ├── AuthLayout.tsx    # Main authentication layout
+│   ├── FormComponents.tsx # Form input components
+│   ├── ProtectedRoute.tsx # Route guard for authenticated users
+│   ├── PublicRoute.tsx   # Route guard for public pages
+│   └── SsoComponent.tsx  # Social login components
+├── pages/               # Application pages
+│   ├── signin.tsx       # Sign in page
+│   ├── signup.tsx       # Sign up page
+│   └── home.tsx         # Protected home page
+├── services/            # API and business logic
+│   ├── api.interceptor.ts # Axios interceptor for token refresh
+│   ├── apiService.ts    # HTTP API calls
+│   └── authSerivce.ts   # Authentication service layer
+├── store/               # State management
+│   └── token-context.tsx # Authentication context
+├── config/              # Configuration
+│   └── constants.ts     # Environment constants
+└── App.tsx              # Main application component
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔒 Security Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### **Token Management**
+- Access tokens are short-lived (15 minutes) - stored in React context
+- Refresh tokens are long-lived (7 days) - stored as HttpOnly cookie
+- Automatic token refresh on API calls
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### **Route Protection**
+- **Public Routes**: `/signin`, `/signup` (redirects authenticated users)
+- **Protected Routes**: `/home` (requires authentication)
+
+## 🎨 UI Components
+
+### **Form Components**
+- `FormInput`: Reusable input field with validation
+- `PasswordInput`: Password field with strength validation
+- `SubmitButton`: Styled submit button
+- `AuthLink`: Navigation links between auth pages
+
+### **Layout Components**
+- `AuthLayout`: Main layout with SSO options
+- `ProtectedRoute`: Route guard for authenticated users
+- `PublicRoute`: Route guard for public pages
+
+
+## 🔗 Related Projects
+
+- **Backend API**: the project integrates with [auth-flow-nest](https://github.com/AyaHusseinAly/auth-flow-nest) NestJS backend and integrated with endpoints:
+  - `POST /auth/signin` - User authentication
+  - `POST /auth/signup` - User registration
+  - `POST /auth/signout` - User logout
+  - `POST /tokens/refresh` - Token refresh
+  - `GET /users/profile` - User profile
