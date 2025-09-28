@@ -6,11 +6,10 @@ export const ProtectedRoute = ({ children }: any) => {
     const { accessToken, loading } = useAuth();
 
     if (loading) {
-      return <div>Loading...</div>; // or a spinner
+      return <div>Loading...</div>;
     }
   
   if (!accessToken) {
-    // Redirect to login if not authenticated
     return <Navigate to="/signin" replace />;
   }
 

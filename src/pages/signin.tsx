@@ -5,7 +5,7 @@ import { useAuth } from '../store/token-context'
 import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
-    const { setAccessToken } = useAuth();
+    const { setAccessTokenAndHeaders } = useAuth();
     const navigate = useNavigate();    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ const SignInPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const responseData = await authService.login({ email, password });
-        setAccessToken(responseData.accessToken);
+        setAccessTokenAndHeaders(responseData.accessToken);
         navigate('/home');
     }
 

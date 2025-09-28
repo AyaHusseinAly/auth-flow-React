@@ -1,9 +1,12 @@
 import axios from "axios";
 import { BE_URL } from "../config/constants";
+import axiosInstance from "./api.interceptor";
+
+const deviceId = localStorage.getItem("deviceId");
 
 export const signIn = async (data: {email: string, password: string, deviceId?: string|null}) => {
     try{
-        data.deviceId = localStorage.getItem("deviceId");
+        data.deviceId = deviceId;
         const res = await axios.post(`${BE_URL}/auth/signin`, data,
             {
                 withCredentials: true,  // send and receive HttpOnly cookies
@@ -22,18 +25,17 @@ export const signIn = async (data: {email: string, password: string, deviceId?: 
 
 export const signOut = async () => {
     try{
-        return;
-
+        const res = await axiosInstance.post(`${BE_URL}/auth/signout`,{deviceId});
+        return res.data;
     } catch (err: any) {
-        console.error("Sign out error:", err.response?.data || err.message);
-    throw err;
-    }
-    
+        console.error("signOut error:", err.response?.data || err.message);
+        throw err;
+    }   
 }
 
 export const signUp = async (data: {email: string, password: string, fullName: string, deviceId?: string|null}) => {
     try{
-        data.deviceId = localStorage.getItem("deviceId");
+        data.deviceId = deviceId;
         const res = await axios.post(`${BE_URL}/auth/signup`, data,
             {
                 withCredentials: true,  // send and receive HttpOnly cookies
@@ -53,7 +55,6 @@ export const signUp = async (data: {email: string, password: string, fullName: s
 
 export const refreshToken = async () => {
     try{
-        const deviceId = localStorage.getItem("deviceId");
         const res = await axios.post(`${BE_URL}/tokens/refresh`, {deviceId},
             {
                 withCredentials: true,  // send and receive HttpOnly cookies
@@ -66,6 +67,18 @@ export const refreshToken = async () => {
     } catch (err: any) {
         console.error("refresh token error:", err.response?.data || err.message);
     throw err;
+    }
+    
+}
+
+export const getUser = async () => {
+    try{
+        console.log("headers<<>>",axiosInstance.defaults.headers)
+        const res = await axiosInstance.get(`${BE_URL}/users/profile`);
+        return res.data;
+    } catch (err: any) {
+        console.error("getUser error:", err.response?.data || err.message);
+        throw err;
     }
     
 }

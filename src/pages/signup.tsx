@@ -5,7 +5,7 @@ import { useAuth } from '../store/token-context'
 import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
-  const { setAccessToken } = useAuth();
+  const { setAccessTokenAndHeaders } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ const SignUpPage = () => {
     }
   
     const responseData = await authSerivce.signup({ email, password, fullName });
-    setAccessToken(responseData.accessToken);
+    setAccessTokenAndHeaders(responseData.accessToken);
     navigate('/home');
 
   }

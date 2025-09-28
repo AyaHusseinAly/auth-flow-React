@@ -1,10 +1,10 @@
-// src/context/AuthContext.tsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import * as authService from '../services/authSerivce';
+import axiosInstance from '../services/api.interceptor';
 
 interface AuthContextType {
   accessToken: string | null;
-  setAccessToken: (token: string | null) => void;
+  setAccessTokenAndHeaders: (token: string | null) => void;
   loading: boolean;
 }
 
@@ -14,16 +14,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const setAccessTokenAndHeaders = (value: string|null)=>{
+    setAccessToken(value);
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${value}`;
+  }
   // Refresh token on initial load
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
         const res = await authService.refreshAccessToken();
-        setAccessToken(res.accessToken);
-        
+        setAccessTokenAndHeaders(res.accessToken);
+
       } catch (err) {
         console.error('Token refresh failed:', err);
-        setAccessToken(null);
+        setAccessTokenAndHeaders(null);
       } finally {
         setLoading(false);
       }
@@ -34,7 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, loading }}>
+    <AuthContext.Provider value={{ accessToken, setAccessTokenAndHeaders, loading }}>
       {children}
     </AuthContext.Provider>
   );
