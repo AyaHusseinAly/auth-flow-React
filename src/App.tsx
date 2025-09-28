@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import { useEffect } from 'react';
 import AuthLayout from './components/AuthLayout';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { PublicRoute } from './components/PublicRoute';
 
 const App =  () => {
   const router = createBrowserRouter([
@@ -13,12 +15,17 @@ const App =  () => {
       path:'/', 
       element: <AuthLayout/>,
       children:[
-        {path:'signin', element: <SignInPage/>},
-        {path:'signup', element: <SignUpPage/>},
+        {path:'signin', element:<PublicRoute> <SignInPage/> </PublicRoute> },
+        {path:'signup', element: <PublicRoute> <SignUpPage/> </PublicRoute> },
         {path:'/', element: <Navigate to="home" replace />}
       ]
     },
-    {path:'/home', element: <HomePage/>},
+    {path:'/home', 
+      element:  (
+        <ProtectedRoute>
+          <HomePage />
+        </ProtectedRoute>
+      )},
 
   ]);
   useEffect(() => {getOrCreateDeviceId();} ,[]);

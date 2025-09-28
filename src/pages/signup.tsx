@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import * as authSerivce from "../services/authSerivce";
 import { FormInput, PasswordInput, SubmitButton, AuthLink } from '../components/FormComponents';
+import { useAuth } from '../store/token-context'
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
+  const { setAccessToken } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // If confirm password doesn't match, prevent submission
     if (password !== confirmPassword) {
@@ -17,7 +21,11 @@ const SignUpPage = () => {
         ?.setCustomValidity("Passwords do not match");
       return;
     }
-authSerivce.signup({ email, password, fullName });
+  
+    const responseData = await authSerivce.signup({ email, password, fullName });
+    setAccessToken(responseData.accessToken);
+    navigate('/home');
+
   }
 
   return (

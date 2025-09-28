@@ -5,9 +5,7 @@ import * as apiService from '../services/apiService';
  * stores the access token in localStorage.
  */
 export const login = async (credentials: {email: string, password: string}) => {
-    const responseData = await apiService.signIn(credentials);
-    localStorage.setItem('accessToken', responseData.accessToken);
-    return responseData;
+    return await apiService.signIn(credentials);
 }
 
 /**
@@ -16,7 +14,6 @@ export const login = async (credentials: {email: string, password: string}) => {
  */
 export const logout = async () => {
     await apiService.signOut();
-    localStorage.removeItem('accessToken');
     return;
 }
 
@@ -25,7 +22,11 @@ export const logout = async () => {
  * stores the access token in localStorage.
  */
 export const signup = async (data: {email: string, password: string, fullName: string}) => {
-    const responseData = await apiService.signUp(data);
-    localStorage.setItem('accessToken', responseData.accessToken);
+    return await apiService.signUp(data);
+}
+
+
+export const refreshAccessToken = async () => {
+    const responseData = await apiService.refreshToken();
     return responseData;
 }

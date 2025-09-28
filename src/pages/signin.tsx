@@ -1,14 +1,20 @@
 import { useState } from "react";
 import * as authService from "../services/authSerivce";
 import { FormInput, PasswordInput, SubmitButton, AuthLink } from '../components/FormComponents';
+import { useAuth } from '../store/token-context'
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
+    const { setAccessToken } = useAuth();
+    const navigate = useNavigate();    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
-    const handleSubmit = (e: React.FormEvent) => {
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        authService.login({ email, password });
+        const responseData = await authService.login({ email, password });
+        setAccessToken(responseData.accessToken);
+        navigate('/home');
     }
 
 
