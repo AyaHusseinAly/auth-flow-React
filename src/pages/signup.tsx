@@ -10,12 +10,19 @@ const SignUpPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    authSerivce.signup({ email, password, fullName });
+    // If confirm password doesn't match, prevent submission
+    if (password !== confirmPassword) {
+      (e.target as HTMLFormElement)
+        .querySelector<HTMLInputElement>("#confirmPassword")
+        ?.setCustomValidity("Passwords do not match");
+      return;
+    }
+authSerivce.signup({ email, password, fullName });
   }
 
   return (
     <>
-      <div>
+      <div  className="w-75">
         <div className="text-center mb-4">
           <p>Sign up to get started</p>
         </div>
@@ -29,6 +36,7 @@ const SignUpPage = () => {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             required
+            minLength={3}
           />
 
           <FormInput
@@ -47,15 +55,17 @@ const SignUpPage = () => {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            required 
           />
-
+ 
           <PasswordInput
             id="confirmPassword"
             label="Confirm Password"
             placeholder="Re-enter your password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            isConfirmPassword={true}
+            passwordValue={password}
             required
           />
 

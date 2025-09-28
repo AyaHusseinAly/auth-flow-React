@@ -11,14 +11,10 @@ const SignInPage = () => {
         authService.login({ email, password });
     }
 
-    const handleForgotPassword = () => {
-        // Add forgot password logic here
-        console.log("Forgot password clicked");
-    }
 
     return (
         <>
-            <div className="p-4">
+            <div className="p-4 w-75">
                 <div className="text-center mb-4">
                     <p>Sign in to continue...</p>
                 </div>
@@ -39,9 +35,7 @@ const SignInPage = () => {
                         label="Password"
                         placeholder="Enter your password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        showForgotPassword={true}
-                        onForgotPassword={handleForgotPassword}
+                        onChange={(e)=> setPassword(e.target.value)}
                         required
                     />
 

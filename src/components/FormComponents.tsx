@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface FormInputProps {
   id: string;
@@ -8,6 +9,7 @@ interface FormInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
+  minLength?: number
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -17,7 +19,9 @@ export const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   value,
   onChange,
-  required = false
+  required = false,
+  minLength = 0
+
 }) => {
   return (
     <div className="mb-3 text-start">
@@ -30,14 +34,15 @@ export const FormInput: React.FC<FormInputProps> = ({
         placeholder={placeholder}
         value={value}
         required={required}
+        minLength={minLength}
       />
     </div>
   );
 };
 
 interface PasswordInputProps extends Omit<FormInputProps, 'type'> {
-  showForgotPassword?: boolean;
-  onForgotPassword?: () => void;
+  isConfirmPassword?: boolean,
+  passwordValue?: string
 }
 
 export const PasswordInput: React.FC<PasswordInputProps> = ({
@@ -47,36 +52,56 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   value,
   onChange,
   required = false,
-  showForgotPassword = false,
-  onForgotPassword
+  isConfirmPassword = false,
+  passwordValue= ""
 }) => {
+  const [error, setError] = useState("");
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+    // regex for: - at least 8 chars  - at least 1 letter  - at least 1 number - at least 1 special character
+    if(!isConfirmPassword){
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(e.target.value)) {
+        setError("Password must be at least 8 characters, include a letter, a number, and a special character.");
+      } else {
+        setError("");
+      }
+    }else{
+      if (passwordValue !== e.target.value) {
+        setError("Passwords do not match");
+      }else{
+        setError("");
+      }
+    }
+};
+
   return (
     <div className="mb-3 text-start">
       <div className="d-flex justify-content-between">
         <label htmlFor={id} className="form-label">{label}</label>
-        {showForgotPassword && (
-          <a 
-            href="#" 
-            className="text-decoration-none" 
+          {!isConfirmPassword && (<Link
+            to={"#"}
+            className="text-decoration-none disabled-link"
             style={{ color: "#f97316", fontSize: "0.875rem" }}
-            onClick={(e) => {
-              e.preventDefault();
-              onForgotPassword?.();
-            }}
           >
             Forgot password?
-          </a>
-        )}
+          </Link>)}
+      
       </div>
       <input
-        onChange={onChange}
+        onChange={handlePasswordChange}
         type="password"
         id={id}
         className="form-control bg-dark text-light border-0"
         placeholder={placeholder}
         value={value}
         required={required}
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).+$"
+        title="Password must be at least 8 characters, include a letter, a number, and a special character."
       />
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
@@ -117,13 +142,13 @@ export const AuthLink: React.FC<AuthLinkProps> = ({ text, linkText, to }) => {
   return (
     <div className="text-center">
       <span>{text} </span>
-      <a 
-        href={to} 
+      <Link 
+        to={to} 
         className="text-decoration-none" 
         style={{ color: "#f97316" }}
       >
         {linkText}
-      </a>
+      </Link>
     </div>
   );
 };
