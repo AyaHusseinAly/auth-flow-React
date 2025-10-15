@@ -6,7 +6,13 @@ const AuthLayout = () => {
   return (
     <div className="card border-0 main-card rounded-4 d-flex flex-row">
 
-      <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block"></div>
+      <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block"   
+        style={{
+          backgroundImage: "url('/bg-img1.JPG')",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}></div>
       
 
       <div className="card-body card-body-right w-50 rounded-end-4">

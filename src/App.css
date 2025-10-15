@@ -15,13 +15,13 @@ body {
     text-align: center;
 }
 
-.card-body-left {
+
+/* .card-body-left {
     background-image: url("/bg-img1.JPG");
-    /* background-image: url("src/assets/bg-img1.jpg"); */
-    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
+*/
 
 .card-body-right {
     background: linear-gradient(135deg, #0d0d14 0%, #10121c 100%);
