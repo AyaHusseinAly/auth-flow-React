@@ -16,7 +16,7 @@ body {
 }
 
 .card-body-left {
-    background-image: url("bg-img1.JPG");
+    background-image: url("/bg-img1.JPG");
     /* background-image: url("src/assets/bg-img1.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
