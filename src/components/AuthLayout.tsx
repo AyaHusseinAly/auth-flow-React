@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import SsoComponent from './SsoComponent';
+import bg from '../assets/bg-img1.jpg';
 
 const AuthLayout = () => {
   return (
     <div className="card border-0 main-card rounded-4 d-flex flex-row">
 
-      <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block"></div>
+      <div className="card-body card-body-left w-50 rounded-start-4 d-none d-md-block" style={{ backgroundImage: `url(${bg})` }}></div>
       
 
       <div className="card-body card-body-right w-50 rounded-end-4">
